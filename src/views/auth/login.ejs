@@ -1,0 +1,9 @@
+<%- include('../partials/cabecera') %>
+<%- include('../partials/errores') %>
+<form method="post" action="/login">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <p><label>Correo <input type="text" name="email" value="<%= valores.email %>"></label></p>
+  <p><label>Contraseña <input type="password" name="password"></label></p>
+  <button type="submit">Entrar</button>
+</form>
+<%- include('../partials/pie') %>

@@ -1,0 +1,37 @@
+<%- include('../partials/cabecera') %>
+<%- include('../partials/errores', { errores: modelo.errores }) %>
+
+<!-- Paso 1: elegir fecha y turno (petición GET) -->
+<form method="get" action="/reservas/nueva">
+  <label>Fecha <input type="date" name="fecha" value="<%= modelo.valores.fecha %>"></label>
+  <label>Turno
+    <select name="turno">
+      <% modelo.turnos.forEach(function (t) { %>
+        <option value="<%= t.valor %>" <%= modelo.valores.turno === t.valor ? 'selected' : '' %>><%= t.texto %></option>
+      <% }) %>
+    </select>
+  </label>
+  <button type="submit">Ver disponibilidad</button>
+</form>
+
+<!-- Paso 2: elegir uno de los equipos disponibles (petición POST) -->
+<% if (modelo.mostrarEquipos) { %>
+  <% if (modelo.equiposDisponibles.length === 0) { %>
+    <p>No hay equipos disponibles para esa fecha y turno.</p>
+  <% } else { %>
+    <form method="post" action="/reservas">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="fecha" value="<%= modelo.valores.fecha %>">
+      <input type="hidden" name="turno" value="<%= modelo.valores.turno %>">
+      <label>Equipo
+        <select name="equipoId">
+          <% modelo.equiposDisponibles.forEach(function (e) { %>
+            <option value="<%= e.id %>" <%= modelo.valores.equipoId === String(e.id) ? 'selected' : '' %>><%= e.codigo %> - <%= e.nombre %></option>
+          <% }) %>
+        </select>
+      </label>
+      <button type="submit">Reservar</button>
+    </form>
+  <% } %>
+<% } %>
+<%- include('../partials/pie') %>

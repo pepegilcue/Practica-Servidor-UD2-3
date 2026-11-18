@@ -1,0 +1,22 @@
+<%- include('../partials/cabecera') %>
+<table border="1" cellpadding="4">
+  <tr><th>Usuario</th><th>Equipo</th><th>Fecha</th><th>Turno</th><th>Estado</th><th></th></tr>
+  <% reservas.forEach(function (r) { %>
+    <tr>
+      <td><%= r.usuarioNombre %></td>
+      <td><%= r.equipoNombre %></td>
+      <td><%= r.fecha %></td>
+      <td><%= r.turno %></td>
+      <td><%= r.estado %></td>
+      <td>
+        <% if (r.estado === 'activa') { %>
+          <form method="post" action="/admin/reservas/<%= r.id %>/cancelar">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Cancelar</button>
+          </form>
+        <% } %>
+      </td>
+    </tr>
+  <% }) %>
+</table>
+<%- include('../partials/pie') %>

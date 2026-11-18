@@ -1,0 +1,12 @@
+<%- include('../partials/cabecera') %>
+<ul>
+  <li>Código: <%= equipo.codigo %></li>
+  <li>Nombre: <%= equipo.nombre %></li>
+  <li>Tipo: <%= equipo.tipo %></li>
+  <li>Estado: <%= equipo.estado %></li>
+</ul>
+<% if (equipo.estado === 'operativo') { %>
+  <p><a href="/reservas/nueva">Reservar este equipo</a> (la disponibilidad depende de la fecha y el turno)</p>
+<% } %>
+<p><a href="/equipos">Volver al listado</a></p>
+<%- include('../partials/pie') %>

@@ -1,0 +1,42 @@
+<%- include('../partials/cabecera') %>
+<%- include('../partials/errores') %>
+
+<h2>Añadir equipo</h2>
+<form method="post" action="/admin/equipos">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <p><label>Código <input type="text" name="codigo" value="<%= valores.codigo %>"></label></p>
+  <p><label>Nombre <input type="text" name="nombre" value="<%= valores.nombre %>"></label></p>
+  <p><label>Tipo
+    <select name="tipo">
+      <option value="sobremesa" <%= valores.tipo === 'sobremesa' ? 'selected' : '' %>>Sobremesa</option>
+      <option value="portatil" <%= valores.tipo === 'portatil' ? 'selected' : '' %>>Portátil</option>
+    </select>
+  </label></p>
+  <button type="submit">Añadir</button>
+</form>
+
+<h2>Equipos</h2>
+<table border="1" cellpadding="4">
+  <tr><th>Código</th><th>Nombre</th><th>Tipo</th><th>Estado</th><th></th></tr>
+  <% equipos.forEach(function (e) { %>
+    <tr>
+      <td><%= e.codigo %></td>
+      <td><%= e.nombre %></td>
+      <td><%= e.tipo %></td>
+      <td><%= e.estado %></td>
+      <td>
+        <form method="post" action="/admin/equipos/<%= e.id %>/estado">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <% if (e.estado === 'operativo') { %>
+            <input type="hidden" name="estado" value="fuera_de_servicio">
+            <button type="submit">Poner fuera de servicio</button>
+          <% } else { %>
+            <input type="hidden" name="estado" value="operativo">
+            <button type="submit">Poner operativo</button>
+          <% } %>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+</table>
+<%- include('../partials/pie') %>

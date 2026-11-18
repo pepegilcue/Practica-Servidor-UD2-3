@@ -1,0 +1,7 @@
+<% if (locals.errores && Object.keys(errores).length > 0) { %>
+  <ul style="color:red">
+    <% Object.values(errores).forEach(function (e) { %>
+      <li><%= e %></li>
+    <% }) %>
+  </ul>
+<% } %>
